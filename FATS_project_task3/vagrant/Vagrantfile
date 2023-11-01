@@ -1,0 +1,22 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+ 
+
+  config.vm.define "vue-storefront" do |vsf|
+    vsf.vm.box = "ubuntu/bionic64"
+    vsf.vm.network "private_network", type: "dhcp"
+    vsf.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+    end
+
+    vsf.vm.provision "ansible" do |ansible|
+      ansible.playbook = "ansible/vuestorefront.yml"  # Path to your Vue Storefront Ansible playbook
+      ansible.limit = "vue-storefront"  # Name of the group in your Ansible inventory
+    end
+  end
+
+ 
+end
+
